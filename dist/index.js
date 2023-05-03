@@ -13821,7 +13821,7 @@ async function run() {
     // See https://developer.github.com/v3/issues/#create-an-issue
     const { data } = await octokit.request("POST /repos/{owner}/{repo}/issues", {
       ...context.repo,
-      title: "My test issue",
+      title: lockId,
     });
     console.log("Issue created: %s", data.html_url);
 
