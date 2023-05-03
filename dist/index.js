@@ -9597,6 +9597,14 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
+/***/ 9820:
+/***/ ((module) => {
+
+module.exports = eval("require")("@octokit/action");
+
+
+/***/ }),
+
 /***/ 2877:
 /***/ ((module) => {
 
@@ -9776,6 +9784,7 @@ var __webpack_exports__ = {};
 (() => {
 const core = __nccwpck_require__(2186);
 const github = __nccwpck_require__(5438);
+const { Octokit } = __nccwpck_require__(9820);
 
 // most @actions toolkit packages have async methods
 async function run() {
@@ -9785,15 +9794,9 @@ async function run() {
 
     const actionToken = token == "undefined" ? process.env.GITHUB_TOKEN : token;
 
-
     core.info(`Our lock-id is ${lockId}`);
 
-    const octokit = new github.GitHub(token);
     const context = github.context;
-
-    // core.debug((new Date()).toTimeString()); // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
-    // await wait(parseInt(ms));
-    // core.info((new Date()).toTimeString());
 
     // Check if an open issue with title 'ZAZO' already exists
     const issueSearchResult = await octokit.search.issuesAndPullRequests({
@@ -9811,7 +9814,17 @@ async function run() {
       });
     }
 
-    
+    const octokit = new Octokit();
+
+    // See https://developer.github.com/v3/issues/#create-an-issue
+    const { data } = await octokit.request("POST /repos/{owner}/{repo}/issues", {
+      ...context.repo,
+      title: "My test issue",
+    });
+    console.log("Issue created: %s", data.html_url);
+
+
+
     core.setOutput('exists', "false");
   } catch (error) {
     core.setFailed(error.message);
