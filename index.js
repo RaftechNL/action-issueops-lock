@@ -1,6 +1,5 @@
 const core = require('@actions/core');
-const wait = require('./wait');
-
+const github = require('@actions/github');
 
 // most @actions toolkit packages have async methods
 async function run() {
@@ -8,10 +7,29 @@ async function run() {
     const lockId = core.getInput('lock-id');
     core.info(`Our lock-id is ${lockId}`);
 
+    const context = github.context;
+
     // core.debug((new Date()).toTimeString()); // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
     // await wait(parseInt(ms));
     // core.info((new Date()).toTimeString());
 
+    // Check if an open issue with title 'ZAZO' already exists
+    const issueSearchResult = await octokit.search.issuesAndPullRequests({
+      q: `repo:${context.repo.owner}/${context.repo.repo} type:issue in:title ${lockId} is:open`
+    });
+
+    let issueExists = issueSearchResult.data.total_count > 0;
+
+    // Create a new GitHub issue with title 'ZAZO' if it doesn't exist
+    if (!issueExists) {
+      const issue = await octokit.issues.create({
+        ...context.repo,
+        title: lockId,
+        body: 'This is the issue body. Describe your issue here.',
+      });
+    }
+
+    
     core.setOutput('exists', "false");
   } catch (error) {
     core.setFailed(error.message);
