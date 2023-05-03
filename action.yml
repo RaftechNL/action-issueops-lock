@@ -1,13 +1,16 @@
-name: 'Wait'
-description: 'Wait a designated number of milliseconds'
+name: 'action-issueops-lock'
+description: 'Creates and/or checks for issue signalling a lock'
 inputs:
-  milliseconds:  # id of input
-    description: 'number of milliseconds to wait'
+  lock-id: 
+    description: 'The ID of the lock'
     required: true
-    default: '1000'
+  mode:  
+    description: 'Operating mode - check or create'
+    required: true
+    default: 'check'
 outputs:
-  time: # output will be available to future steps
-    description: 'The current time after waiting'
+  exists: # output will be available to future steps
+    description: 'The state of given lock - if exists or not'
 runs:
   using: 'node16'
   main: 'dist/index.js'
