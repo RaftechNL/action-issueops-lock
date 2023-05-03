@@ -9781,8 +9781,14 @@ const github = __nccwpck_require__(5438);
 async function run() {
   try {
     const lockId = core.getInput('lock-id');
+    const token = core.getInput("token");
+
+    const actionToken = token == "undefined" ? process.env.GITHUB_TOKEN : token;
+
+
     core.info(`Our lock-id is ${lockId}`);
 
+    const octokit = new github.GitHub(token);
     const context = github.context;
 
     // core.debug((new Date()).toTimeString()); // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
