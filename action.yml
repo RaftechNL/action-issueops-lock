@@ -6,7 +6,7 @@ inputs:
     required: true
   mode:  
     description: 'Operating mode - check or create'
-    required: true
+    required: false
     default: 'check'
 outputs:
   exists: # output will be available to future steps
