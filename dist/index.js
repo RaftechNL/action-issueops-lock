@@ -13797,6 +13797,7 @@ async function run() {
     core.info(`Our lock-id is ${lockId}`);
 
     const context = github.context;
+    const octokit = new Octokit();
 
     // Check if an open issue with title 'ZAZO' already exists
     const issueSearchResult = await octokit.search.issuesAndPullRequests({
@@ -13814,7 +13815,7 @@ async function run() {
       });
     }
 
-    const octokit = new Octokit();
+
 
     // See https://developer.github.com/v3/issues/#create-an-issue
     const { data } = await octokit.request("POST /repos/{owner}/{repo}/issues", {
