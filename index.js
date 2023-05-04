@@ -27,16 +27,12 @@ async function run() {
         const issue = await octokit.issues.create({
           ...context.repo,
           title: lockId,
-          body: '** automatically created by action-issueops-lock ** ',
+          body: "** automatically created by action-issueops-lock ** ",
         });
-
-        console.log("Issue lock created: %s", data.html_url);
         core.setOutput("exists", "true");
       } else {
         core.setOutput("exists", "false");
       }
-
-
     } else {
       core.info(`Issue lock with lock-id of ${lockId} - already exists`);
       core.setOutput("exists", "true");
