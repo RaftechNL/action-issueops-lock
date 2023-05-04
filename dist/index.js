@@ -13791,7 +13791,6 @@ async function run() {
   try {
     const lockId = core.getInput("lock-id");
     const mode = core.getInput("mode");
-    const body = core.getInput("body");
 
     const octokit = new Octokit();
     const context = github.context;
@@ -13817,9 +13816,11 @@ async function run() {
 
         console.log("Issue lock created: %s", data.html_url);
         core.setOutput("exists", "true");
+      } else {
+        core.setOutput("exists", "false");
       }
 
-      core.setOutput("exists", "false");
+
     } else {
       core.info(`Issue lock with lock-id of ${lockId} - already exists`);
       core.setOutput("exists", "true");
