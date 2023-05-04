@@ -8,6 +8,10 @@ inputs:
     description: 'Operating mode - check or create'
     required: false
     default: 'check'
+  body:  
+    description: 'Operating mode - check or create'
+    required: false
+    default: 'automatically created by action-issueops-lock'    
 outputs:
   exists: # output will be available to future steps
     description: 'The state of given lock - if exists or not'
