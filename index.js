@@ -29,7 +29,7 @@ async function run() {
         const issue = await octokit.issues.create({
           ...context.repo,
           title: lockId,
-          body: body,
+          body: '** automatically created by action-issueops-lock ** ',
         });
 
         console.log("Issue lock created: %s", data.html_url);
