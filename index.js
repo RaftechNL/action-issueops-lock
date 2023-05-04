@@ -6,7 +6,6 @@ const { Octokit } = require("@octokit/action");
 async function run() {
   try {
     const lockId = core.getInput("lock-id");
-    const token = core.getInput("token");
     const mode = core.getInput("mode");
     const body = core.getInput("body");
 
